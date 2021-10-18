@@ -1,6 +1,6 @@
 def proccess_ebook(filename):
 
-    file = open(filename, encoding='utf-8')
+    file = open(filename, 'r', encoding='utf-8')
 
     content = file.read()
 
@@ -11,16 +11,15 @@ def proccess_ebook(filename):
     for line in lines:
         if len(line) > 0:
             words = []
-
             for word in line.split(' '):
-                if len(word) > 0:
+                if word.isnumeric() or word.islower():
                     words.append(word)
 
             for word in words:
-                if word.lower() in words_map.keys():
-                    words_map[word.lower()] +=1
+                if word in words_map.keys():
+                    words_map[word] +=1
                 else:
-                    words_map[word.lower()]= 1
+                    words_map[word]= 1
 
     value = ''
     count = 0
@@ -32,6 +31,6 @@ def proccess_ebook(filename):
 
     result = {k: v for k, v in sorted(words_map.items(), key=lambda item: item[1])}
 
-    return list(result.items())[-1]
+    return list(result.items())
 if __name__ == '__main__':
-    print(proccess_ebook('pg36099.txt'))
+    print(proccess_ebook('pg66474.txt'))
